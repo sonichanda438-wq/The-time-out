@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The time out | Cafe &amp; Hangout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&amp;family=Montserrat:wght@700;800;900&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#37393a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-secondary-fixed": "#231b00",
+                        "surface-tint": "#c8c6c5",
+                        "error-container": "#93000a",
+                        "surface": "#121414",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-surface": "#e2e2e2",
+                        "tertiary-fixed-dim": "#ffb690",
+                        "surface-container-highest": "#333535",
+                        "surface-container-high": "#282a2b",
+                        "inverse-on-surface": "#2f3131",
+                        "background": "#121414",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#121414",
+                        "on-secondary": "#3c2f00",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#333535",
+                        "secondary-fixed": "#ffe083",
+                        "secondary-container": "#eec200",
+                        "on-tertiary-fixed-variant": "#783200",
+                        "tertiary": "#ffb690",
+                        "on-primary-container": "#7e7d7d",
+                        "surface-container-low": "#1a1c1c",
+                        "on-primary": "#313030",
+                        "surface-container-lowest": "#0c0f0f",
+                        "on-surface": "#e2e2e2",
+                        "outline-variant": "#444748",
+                        "on-surface-variant": "#c4c7c7",
+                        "on-tertiary-container": "#cf5b00",
+                        "on-background": "#e2e2e2",
+                        "primary": "#c8c6c5",
+                        "secondary-fixed-dim": "#eec200",
+                        "primary-container": "#121212",
+                        "secondary": "#ffe083",
+                        "outline": "#8e9192",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container": "#1e2020",
+                        "inverse-primary": "#5f5e5e",
+                        "tertiary-container": "#250a00",
+                        "on-secondary-container": "#645000",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-tertiary": "#552100",
+                        "tertiary-fixed": "#ffdbca",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-xl": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "label-bold": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "label-sm": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "headline-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-bold": ["14px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .offset-shadow-primary { box-shadow: 4px 4px 0px 0px theme('colors.secondary'); }
+        .offset-shadow-tertiary { box-shadow: 4px 4px 0px 0px theme('colors.on-tertiary-container'); }
+        .hover-scale { transition: transform 0.2s ease-in-out; }
+        .hover-scale:hover { transform: scale(1.02); }
+        
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Review Carousel */
+        .carousel-container {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        .carousel-container::-webkit-scrollbar { 
+            display: none; /* WebKit */
+        }
+        .carousel-item {
+            scroll-snap-align: start;
+        }
+        
+        /* Interactive Form Button */
+        .btn-active:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="antialiased font-body-md text-body-md overflow-x-hidden selection:bg-secondary selection:text-on-secondary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop py-4 bg-background/95 backdrop-blur-sm border-b-2 border-surface-container-highest">
+<div class="font-headline-md text-headline-md font-black tracking-tighter text-secondary dark:text-secondary md:font-headline-lg md:text-headline-lg">THE TIME OUT</div>
+<ul class="hidden md:flex gap-8 items-center">
+<li><a class="text-secondary font-bold border-b-2 border-secondary pb-1 font-label-bold text-label-bold" href="#">Home</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors duration-200 font-label-bold text-label-bold" href="#about">About</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors duration-200 font-label-bold text-label-bold" href="#menu-section">Menu</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors duration-200 font-label-bold text-label-bold" href="#reviews">Reviews</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-colors duration-200 font-label-bold text-label-bold" href="#booking-form">Book Now</a></li>
+</ul>
+<a class="hidden md:block bg-secondary text-on-secondary px-6 py-2 rounded font-label-bold text-label-bold hover:offset-shadow-tertiary transition-shadow scale-95 duration-150 inline-block text-center" href="https://maps.app.goo.gl/jPdWSj4s3ariD2Kq8" target="_blank">Find Us</a>
+<button class="md:hidden text-secondary" id="mobile-menu-btn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+</button>
+</nav>
+<!-- Mobile Menu Drawer -->
+<div class="hidden fixed inset-0 z-[60] bg-surface/98 backdrop-blur-md flex flex-col items-center justify-center gap-8" id="mobile-menu">
+<button class="absolute top-6 right-6 text-secondary" id="close-menu-btn">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+<a class="text-secondary font-headline-md text-headline-md hover:text-tertiary transition-colors duration-200" href="#">Home</a>
+<a class="text-secondary font-headline-md text-headline-md hover:text-tertiary transition-colors duration-200" href="#menu-section">Full Menu</a>
+<a class="text-secondary font-headline-md text-headline-md hover:text-tertiary transition-colors duration-200" href="#booking-form">Book A Table</a>
+<a class="text-secondary font-headline-md text-headline-md hover:text-tertiary transition-colors duration-200" href="https://maps.app.goo.gl/jPdWSj4s3ariD2Kq8" target="_blank">Get Directions</a>
+<a class="text-secondary font-headline-md text-headline-md hover:text-tertiary transition-colors duration-200" href="#contact-footer">Contact Us</a>
+</div>
+<!-- Section 1: Hero -->
+<header class="reveal relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 px-margin-mobile md:px-margin-desktop overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Hero background of The time out cafe" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsSQ_xkt7qUSrfwsG8KLLtEKrky52DXp6P4pVEXrCal6UzzBRsLrbaIwy38Sns7vPVm5XRpL7AT0shqG47DzfS05ydy_NtZjsXKuH9omcYWc3bjr0Gl5VsKQlSEe8J3cSce4sX-p0Vhdsib_wkUMnRhyhejSz7HKsHoh7B2kIhsc7i0mMAywt3_4OEEvtsh1AKaE1MNhzO5qvvrpWhcGGs8UFk3A0feRqBWYaQKhymWzitnlg7AVqiI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+</div>
+<div class="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-6">
+<h1 class="font-headline-xl text-headline-xl text-secondary drop-shadow-2xl font-black uppercase">The time out</h1>
+<p class="font-body-lg text-body-lg text-inverse-surface max-w-2xl">A New Space Of Taste</p>
+<div class="flex flex-col sm:flex-row gap-4 mt-8">
+<a class="bg-secondary text-on-secondary px-8 py-4 rounded font-label-bold text-label-bold hover:offset-shadow-tertiary transition-shadow uppercase inline-flex items-center gap-2 justify-center" href="#booking-form">
+                    Book a Table
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="bg-transparent border-2 border-on-surface text-on-surface px-8 py-4 rounded font-label-bold text-label-bold hover:bg-surface-variant transition-colors uppercase inline-flex items-center gap-2 justify-center" href="#menu-section">
+                    View Menu
+                </a>
+<a class="bg-transparent border-2 border-on-surface text-on-surface px-8 py-4 rounded font-label-bold text-label-bold hover:bg-surface-variant transition-colors uppercase inline-flex items-center gap-2 justify-center" href="https://maps.app.goo.gl/jPdWSj4s3ariD2Kq8" target="_blank">
+                    Get Directions
+                </a>
+</div>
+<div class="flex gap-4 mt-4">
+<a class="text-secondary hover:text-tertiary transition-colors" href="tel:+917014291523">
+<span class="material-symbols-outlined text-3xl">call</span>
+</a>
+<a class="text-secondary hover:text-tertiary transition-colors" href="https://wa.me/917014291523" target="_blank">
+<span class="material-symbols-outlined text-3xl">chat</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Section 2: About & Ambience -->
+<section class="reveal py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="about">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-6">
+<div class="inline-flex items-center px-3 py-1 bg-surface-container rounded-sm border border-secondary w-fit">
+<span class="font-label-sm text-label-sm uppercase text-on-surface">About Us</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-inverse-surface">A Vibe Like No Other</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">We are a premium veg-only cafe designed to be your ultimate chill hangout spot. Whether you're here for a quick bite or a long evening with friends, we've got the perfect setting with an urban aesthetic.</p>
+<div class="grid grid-cols-2 gap-6 mt-6">
+<div class="reveal p-6 bg-surface-container border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Veg-Only</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">100% Pure Veg Cafe</p>
+</div>
+<div class="reveal p-6 bg-surface-container border-l-4 border-on-tertiary-container" style="transition-delay: 0.1s;">
+<span class="material-symbols-outlined text-on-tertiary-container text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">deck</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Rooftop Seating</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Enjoy the view</p>
+</div>
+<div class="reveal p-6 bg-surface-container border-l-4 border-secondary" style="transition-delay: 0.2s;">
+<span class="material-symbols-outlined text-secondary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">nightlife</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Trendy Vibe</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Casual &amp; Chill</p>
+</div>
+<div class="reveal p-6 bg-surface-container border-l-4 border-on-tertiary-container" style="transition-delay: 0.3s;">
+<span class="material-symbols-outlined text-on-tertiary-container text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">local_cafe</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Coffee &amp; Desserts</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Great Selection</p>
+</div>
+<div class="reveal p-6 bg-surface-container border-l-4 border-secondary" style="transition-delay: 0.4s;">
+<span class="material-symbols-outlined text-secondary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">park</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Outdoor Seating</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Fresh Air</p>
+</div>
+<div class="reveal p-6 bg-surface-container border-l-4 border-on-tertiary-container" style="transition-delay: 0.5s;">
+<span class="material-symbols-outlined text-on-tertiary-container text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">local_parking</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Free Parking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Hassle-free</p>
+</div>
+</div>
+</div>
+<div class="rounded-lg overflow-hidden border-2 border-surface-variant h-[600px]"><img alt="Modern cafe corner with warm ambient lighting and wooden surfaces" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLs-BRBsT37H2P3pbXUPLIAOndomWAscOv8bWg6aDHzUA6hYsDfuSoZok1ukf68WcIxaXq-315650mw8n68j6DtdS1JhoMZe7Ngdj0lcI6LSklAYkPIoGBAFplp7ZjvVJvYw_ShNOtSoi64u8SqSHQ-Wrc1uHr8RGViO4PrBoPkdGXkRT-NytnpxkJTc9an73jl3NtoTU4gMq963PWV8S08zMDwNO12K-4E1bWm2LQE7a4T2c-qfxCix"/></div>
+</div>
+</section>
+<!-- Section 3: Digital Menu -->
+<section class="reveal py-24 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest" id="menu-section">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col items-center mb-12 gap-6">
+<div class="text-center">
+<h2 class="font-headline-lg text-headline-lg text-secondary mb-2">The Menu</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Crafted with passion, served with style.</p>
+</div>
+<!-- Interactive Menu Tabs -->
+<div class="flex flex-wrap justify-center gap-4 mt-8" id="menu-tabs">
+<button class="menu-tab active px-6 py-2 rounded-full border-2 border-secondary text-secondary font-label-bold text-label-bold hover:bg-secondary/10 transition-colors bg-secondary text-on-secondary" data-filter="all">All</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="pizzas">Pizzas</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="burgers">Burgers</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="snacks">Snacks</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="sandwiches">Sandwiches</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="pasta">Pasta</button>
+<button class="menu-tab px-6 py-2 rounded-full border-2 border-surface-variant text-on-surface-variant font-label-bold text-label-bold hover:border-secondary hover:text-secondary transition-colors" data-filter="beverages">Beverages</button>
+</div>
+</div>
+<div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8" id="menu-grid">
+<!-- Category 1: Pizza -->
+<div class="menu-category pizzas reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex flex-col gap-2 mb-8 border-b border-surface-container-highest pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">local_pizza</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Pizzas (6 Slice)</h3>
+</div>
+<span class="inline-block bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold w-fit mt-2">Extra Cheese Top-up ₹40 Only</span>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Margherita</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹120</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Single Toppings</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹150</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">OTC</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹190</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Cheese Garlic</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹200</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Corn Pizza</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹200</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Veg Supreme</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹210</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Pasta Pizza</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹220</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Peppy Paneer</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹230</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Tandoori Paneer</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹240</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">The Time Out Special</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹280</span>
+</li>
+</ul>
+</div>
+<!-- Category 2: Burgers -->
+<div class="menu-category burgers reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8 border-b border-surface-container-highest pb-4">
+<span class="material-symbols-outlined text-secondary text-3xl">lunch_dining</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Burgers</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Aloo Tikki</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹50</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Cheese Aloo Tikki</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹70</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Double Tikki Cheese</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹80</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Tandoori Burger</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹60</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Cheese Tandoori</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹80</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Double Tikki Tandoori</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹100</span>
+</li>
+</ul>
+</div>
+<!-- Category 3: Snacks & Sides -->
+<div class="menu-category snacks reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8 border-b border-surface-container-highest pb-4">
+<span class="material-symbols-outlined text-secondary text-3xl">tapas</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Quick Snacks &amp; Sides</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Veg. Spring Roll (6pcs)</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹80</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Paneer Spring Roll (6pcs)</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹100</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Cheese Balls (8pcs)</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹80</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">French Fries</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container text-sm">S ₹50 | M ₹70 | L ₹90</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Masala Fries</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container text-sm">S ₹60 | M ₹80 | L ₹100</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Garlic Bread (4 Slice)</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹90</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Deep Fried Momos (10 pcs)</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹100</span>
+</li>
+</ul>
+</div>
+<!-- Category 4: Sandwiches -->
+<div class="menu-category sandwiches reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8 border-b border-surface-container-highest pb-4">
+<span class="material-symbols-outlined text-secondary text-3xl">breakfast_dining</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Sandwiches</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Jumbo Veg</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹60</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Jumbo Grill</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹80</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Tandoori</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹100</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Time Out Special</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹120</span>
+</li>
+</ul>
+</div>
+<!-- Category 5: Pasta -->
+<div class="menu-category pasta reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8 border-b border-surface-container-highest pb-4">
+<span class="material-symbols-outlined text-secondary text-3xl">ramen_dining</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Pasta</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">Red Sauce</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹120</span>
+</li>
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4"><span class="font-label-bold text-label-bold text-inverse-surface uppercase">White Sauce</span></div><span class="font-headline-md text-headline-md text-on-tertiary-container">₹120</span>
+</li>
+</ul>
+</div>
+<!-- Category 6: Drinks -->
+<div class="menu-category beverages reveal bg-surface-container rounded-lg p-8 hover-scale border border-surface-variant hover:border-secondary transition-colors relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8 border-b border-surface-container-highest pb-4">
+<span class="material-symbols-outlined text-secondary text-3xl">local_cafe</span>
+<h3 class="font-headline-md text-headline-md text-inverse-surface">Drinks</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex justify-between items-baseline group/item">
+<div class="flex-1 border-b-2 border-dotted border-surface-container-highest mr-4">
+<span class="font-label-bold text-label-bold text-inverse-surface uppercase">Cold Coffee</span>
+<p class="font-body-sm text-sm text-on-surface-variant mt-1 lowercase first-letter:uppercase">A brew of freshness served cold.</p>
+</div>
+<span class="font-headline-md text-headline-md text-on-tertiary-container">₹55</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Reviews -->
+<section class="reveal py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="reviews">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-inverse-surface mb-4">Word on the Street</h2>
+<div class="flex justify-center gap-1 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">award_star</span>
+</div>
+</div>
+<!-- Swipeable Review Carousel -->
+<div class="carousel-container flex gap-8 pb-8 px-4 -mx-4 snap-x">
+<!-- Review 1 -->
+<div class="carousel-item flex-none w-[85vw] md:w-[400px] bg-surface-container p-8 rounded-lg border border-surface-variant relative mt-6">
+<div class="absolute -top-6 left-8">
+<img alt="Rahul Sharma" class="w-16 h-16 rounded-full border-4 border-background object-cover bg-surface-container-highest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaDH6Cxsg_fXBqZoLFCCDim9z6NlJheIjv7zph7iiy6d-upie4g4E-zEOSTYeHGN1C_iLiXQeefEy2zTo_tTOu8cIw9vmIoorUXLSMh2yVJhHMrLQrXFUh-44JIaU8bqjWeZP1O73nvtwbXbxS0lGnEoiP5p3m53-0Z92KFEqyEDElXoXqlLX28DR6ZqluhR0Ojp-ao-znciG_1iUMPOEqBtyG-o4xgz78k2wV4qSSUMVI46zupw"/>
+</div>
+<div class="mt-8">
+<div class="flex text-secondary mb-4 text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">"The vibe here is unmatched. The Double Tikki Cheese burger is insane, and the playlist always hits the right mood. Perfect late-night spot."</p>
+<h4 class="font-label-bold text-label-bold text-inverse-surface uppercase">Rahul Sharma</h4>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="carousel-item flex-none w-[85vw] md:w-[400px] bg-surface-container p-8 rounded-lg border border-surface-variant relative mt-6">
+<div class="absolute -top-6 left-8">
+<img alt="Anjali Verma" class="w-16 h-16 rounded-full border-4 border-background object-cover bg-surface-container-highest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0GC3fOV9TPeF3esHmoQmDpJo-ztrqYv-9IaHUnQMaH1I1-Ijl3a_NUNlZLxzDAOu3NF-p5GHyJu5owJfXGcaYXIr7iC_-Irh5lev60FNjXofGXfNeiS0yeJwLe-SEdH1Wq-8s0Tss_tGJE4Vjd82kxxScE46uPEm7aKuGCI2s4b-2Cf73qUGXoDaZz_NPebjgcA42hsQIBO4H563LCatFpr31PbEqMuWwOJ3FhQ-NnbccwsMAiA"/>
+</div>
+<div class="mt-8">
+<div class="flex text-secondary mb-4 text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">"I come here for the Peppy Paneer pizza every weekend. Great staff, amazing ambiance, and the cold coffee is the best in the area."</p>
+<h4 class="font-label-bold text-label-bold text-inverse-surface uppercase">Anjali Verma</h4>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="carousel-item flex-none w-[85vw] md:w-[400px] bg-surface-container p-8 rounded-lg border border-surface-variant relative mt-6">
+<div class="absolute -top-6 left-8">
+<img alt="Vikram Singh" class="w-16 h-16 rounded-full border-4 border-background object-cover bg-surface-container-highest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3QwL3GBWnIkSMatz5lzVTQyWWbbXpb8H4Ra19GDPM2tkG4T1_1dE_O0ELuAyXm5_bcfA29IJ50HJ1426ddwH1bS2kRD9S6nZGXCXj4h-dZOjxq4zZrb2dR5fDkZaI5emlTC8zLP78q0X71OS5GHB9ZkPBDePgVGn4i1kZVtUW3UWwm_aLOqq2vjgFeJV59P-g0ZHpBi-Z3sCdJk2_QxpEIx82My2rNtuiTe1DzUfOzXJLy9zJQw"/>
+</div>
+<div class="mt-8">
+<div class="flex text-secondary mb-4 text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">"Finally a cool veg-only spot! The graffiti walls make for great photos, and the snacks are super affordable. 10/10 recommend."</p>
+<h4 class="font-label-bold text-label-bold text-inverse-surface uppercase">Vikram Singh</h4>
+</div>
+</div>
+</div>
+<!-- Navigation Dots -->
+<div class="flex justify-center gap-2 mt-6">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+</div>
+</section>
+<!-- Section 5: Booking & Footer -->
+<section class="reveal bg-surface-container-low border-t border-surface-container-highest" id="booking-form">
+<div class="max-w-container-max mx-auto grid md:grid-cols-2 gap-12 py-24 px-margin-mobile md:px-margin-desktop">
+<!-- Booking Form -->
+<div class="bg-surface-container p-8 rounded-lg border-2 border-surface-container-highest shadow-2xl relative">
+<!-- Stencil Accent -->
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-secondary/10 -z-10 rounded-full blur-xl"></div>
+<h2 class="font-headline-lg text-headline-lg text-secondary mb-6 uppercase">Book Your Spot</h2>
+<form action="https://api.web3forms.com/submit" class="space-y-6" method="POST">
+<input name="access_key" type="hidden" value="YOUR_CLIENT_EMAIL@gmail.com"/>
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2" for="name">Full Name</label>
+<input class="w-full bg-surface border-0 border-b-2 border-surface-container-highest text-inverse-surface px-4 py-3 focus:ring-0 focus:border-on-tertiary-container transition-colors font-body-md rounded-t-md" id="name" name="name" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2" for="phone">Phone</label>
+<input class="w-full bg-surface border-0 border-b-2 border-surface-container-highest text-inverse-surface px-4 py-3 focus:ring-0 focus:border-on-tertiary-container transition-colors font-body-md rounded-t-md" id="phone" name="phone" placeholder="e.g., +91 XXXXX XXXXX" required="" type="tel"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2" for="guests">Guests</label>
+<input class="w-full bg-surface border-0 border-b-2 border-surface-container-highest text-inverse-surface px-4 py-3 focus:ring-0 focus:border-on-tertiary-container transition-colors font-body-md rounded-t-md" id="guests" max="20" min="1" name="guests" required="" type="number"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2" for="datetime">Date &amp; Time</label>
+<input class="w-full bg-surface border-0 border-b-2 border-surface-container-highest text-inverse-surface px-4 py-3 focus:ring-0 focus:border-on-tertiary-container transition-colors font-body-md rounded-t-md color-scheme-dark" id="datetime" name="datetime" required="" type="datetime-local"/>
+</div>
+<button class="btn-active w-full bg-secondary text-on-secondary py-4 rounded font-label-bold text-label-bold hover:offset-shadow-tertiary transition-all uppercase tracking-widest mt-4" type="submit">
+                        Confirm Reservation
+                    </button>
+</form>
+</div>
+<!-- Map & Contact Info -->
+<div class="flex flex-col gap-8">
+<div class="w-full h-[300px] bg-surface-container rounded-lg border border-surface-variant overflow-hidden relative group block"><iframe allowfullscreen="" class="rounded-lg min-h-[300px]" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.2123447348915!2d75.9080777!3d26.896759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db70020473e35%3A0x6b7794380c571991!2sTHE%20TIME%20OUT!5e0!3m2!1sen!2sin!4v1715854000000!5m2!1sen!2sin" style="border:0;" width="100%"></iframe></div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<h4 class="font-label-bold text-label-bold text-secondary uppercase mb-2">Location</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">XV29+V9X, Jaisinghpura Khor Rd, Radha Vihar Colony,<br/>Jaisinghpura Khor,<br/>Jaipur, Rajasthan 302027</p>
+</div>
+<div>
+<h4 class="font-label-bold text-label-bold text-secondary uppercase mb-2">Hours</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Mon - Sun<br/>11:00 AM - 11:00 PM</p>
+<h4 class="font-label-bold text-label-bold text-secondary uppercase mb-2 mt-4">Contact</h4>
+<p class="font-body-md text-body-md text-on-surface-variant"><a class="hover:text-tertiary transition-colors" href="tel:+917014291523">+91 70142 91523</a></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Shared Component -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-12 px-margin-desktop flex flex-col items-center justify-center gap-8 border-t-4 border-secondary text-center" id="contact-footer">
+<div class="font-headline-md text-headline-md text-secondary tracking-tighter">THE TIME OUT</div>
+<div class="flex items-center gap-6 justify-center">
+<a aria-label="Instagram" class="text-on-surface-variant hover:text-secondary transition-colors" href="https://instagram.com" target="_blank">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.822a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+</a>
+<a aria-label="Facebook" class="text-on-surface-variant hover:text-secondary transition-colors" href="https://facebook.com" target="_blank">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+</a>
+<a aria-label="WhatsApp" class="text-on-surface-variant hover:text-secondary transition-colors" href="https://wa.me/917014291523" target="_blank">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+</a>
+<a aria-label="Location" class="text-on-surface-variant hover:text-secondary transition-colors" href="https://maps.app.goo.gl/jPdWSj4s3ariD2Kq8" target="_blank">
+<span class="material-symbols-outlined text-3xl">location_on</span>
+</a>
+<a aria-label="Phone" class="text-on-surface-variant hover:text-secondary transition-colors" href="tel:+917014291523">
+<span class="material-symbols-outlined text-3xl">call</span>
+</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">
+                © 2026 THE TIME OUT CAFE. ALL RIGHTS RESERVED.
+            </div>
+</footer>
+</section>
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
+
+    // Close menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+    // Scroll Reveal Animation
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+
+    // Interactive Menu Tabs
+    const menuTabs = document.querySelectorAll('.menu-tab');
+    const menuCategories = document.querySelectorAll('.menu-category');
+
+    menuTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Update active tab styling
+            menuTabs.forEach(t => {
+                t.classList.remove('active', 'bg-secondary', 'text-on-secondary', 'border-secondary');
+                t.classList.add('border-surface-variant', 'text-on-surface-variant');
+            });
+            tab.classList.add('active', 'bg-secondary', 'text-on-secondary', 'border-secondary');
+            tab.classList.remove('border-surface-variant', 'text-on-surface-variant');
+
+            const filter = tab.dataset.filter;
+
+            menuCategories.forEach(category => {
+                if (filter === 'all' || category.classList.contains(filter)) {
+                    category.style.display = 'block';
+                    // Re-trigger animation
+                    category.classList.remove('active');
+                    setTimeout(() => category.classList.add('active'), 10);
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Review Carousel Dots Logic
+    const carousel = document.querySelector('.carousel-container');
+    const dots = document.querySelectorAll('#reviews .w-2');
+    
+    if(carousel && dots.length) {
+        carousel.addEventListener('scroll', () => {
+            const scrollPercent = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth);
+            const dotIndex = Math.min(Math.floor(scrollPercent * dots.length), dots.length - 1);
+            
+            dots.forEach((dot, index) => {
+                if(index === dotIndex) {
+                    dot.classList.add('bg-secondary');
+                    dot.classList.remove('bg-surface-variant');
+                } else {
+                    dot.classList.remove('bg-secondary');
+                    dot.classList.add('bg-surface-variant');
+                }
+            });
+        });
+    }
+
+</script>
+</body></html>
